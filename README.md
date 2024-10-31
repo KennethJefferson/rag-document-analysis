@@ -13,11 +13,11 @@ A Streamlit-based application that implements Retrieval-Augmented Generation (RA
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.9+
 - CUDA-compatible GPU (optional, for better performance)
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone
+git clone https://github.com/KennethJefferson/rag-document-analysis.git
