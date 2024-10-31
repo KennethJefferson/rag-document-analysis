@@ -17,21 +17,21 @@ import PyPDF2
 from io import BytesIO
 import atexit
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Verify CUDA availability
-if torch.cuda.is_available():
-    device = torch.cuda.get_device_name(0)
-    logger.info(f"GPU available: {device}")
-    logger.info(f"CUDA version: {torch.version.cuda}")
-else:
-    logger.warning("No GPU available!")
+# Remove all CUDA checks and force CPU mode for consistency
+torch.set_num_threads(4)  # Optimize CPU threading
 
-# Make sure CUDA is enabled
-torch.cuda.is_available = lambda: True
+# Add performance optimization through caching
+@st.cache_resource
+def load_sentence_transformer(model_name: str):
+    return SentenceTransformer(model_name)
+
+@st.cache_data
+def get_embeddings(texts: List[str], _model):
+    return _model.encode(texts)
 
 class DocumentProcessor:
     def __init__(self):
